@@ -1,70 +1,82 @@
+import Calculator from '@/components/Calculator';
+import Login from '@/components/Login';
+import Registration from '@/components/Registration';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer, NavigationProp, ParamListBase } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { Image, StyleSheet, Platform } from 'react-native';
+import { useState } from 'react';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
 
-export default function HomeScreen() {
+
+export default function TabBasedNavigation() {
+  const Tab = createBottomTabNavigator();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  }
+
+   const handleLogout = (navigation:NavigationProp<ParamListBase>) => {
+     setIsLoggedIn(false);
+     navigation.navigate('Login');
+  };
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
+    <NavigationContainer independent>
+      <Tab.Navigator
+         screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName: string;
+
+            if (route.name === 'Registration') {
+              iconName = focused ? 'person-add' : 'person-add-outline';
+            } else if (route.name === 'Login') {
+              iconName = focused ? 'log-in' : 'log-in-outline';
+            } else if (route.name === 'Calculator') {
+              iconName = focused ? 'calculator' : 'calculator-outline';
+            } else {
+              iconName = 'alert';
+            }
+
+            return <Icon name={iconName} size={size} color={color} />;
+          },
+          tabBarActiveTintColor: 'tomato',
+          tabBarInactiveTintColor: 'gray',
+          headerShown: false,
+        })}
+      >
+        <Tab.Screen
+          name="Registration"
+          component={Registration}
+          options={{ tabBarLabel: 'Sign Up' }}
         />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+         <Tab.Screen
+          name="Login"
+          options={{ tabBarLabel: 'Sign In' }}
+        >
+          {() => <Login onLogin={handleLogin} />}
+        </Tab.Screen>
+       <Tab.Screen
+          name="Calculator"
+          options={{ tabBarLabel: 'Calculator' }}
+        >
+          {({ navigation }) => (isLoggedIn ? <Calculator onLogout={()=>handleLogout(navigation)} /> : <Login onLogin={handleLogin} />)}
+        </Tab.Screen>
+        </Tab.Navigator>
+    </NavigationContainer>
   );
 }
 
+
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  tabBar: {
+    backgroundColor: '#ffffff', // Example background color
+    borderTopWidth: 1,
+    borderTopColor: '#dddddd',
+    paddingBottom: Platform.OS === 'ios' ? 20 : 0, // Adjust for iOS notch
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  tabBarLabel: {
+    fontSize: 12,
+    fontWeight: 'bold',
   },
 });
