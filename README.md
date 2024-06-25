@@ -1,4 +1,4 @@
-# Welcome to your Expo app 👋
+# Welcome to My First Mobile Calculator App 👋
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
@@ -13,7 +13,7 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 2. Start the app
 
    ```bash
-    npx expo start
+    npx expo start or simply npm run start
    ```
 
 In the output, you'll find options to open the app in a
@@ -23,28 +23,16 @@ In the output, you'll find options to open the app in a
 - [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
 - [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Mobile Calculator App
 
-## Get a fresh project
+Welcome to my project! Here is the output on phone screen without any calculation
 
-When you're ready, run:
+![Output of running my calculator app](./assets//images/calculatorLandingScreen.jpg)
 
-```bash
-npm run reset-project
-```
+### Output on phone screen after a simple calculation
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+![Output of simple calculation](./assets/images/screenOnSimpleNumbers.jpg)
 
-## Learn more
+### Output on phone screen after a calculation with more digits
 
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+![Output of simple calculation](./assets/images/screenOnMoreDigits.jpg)

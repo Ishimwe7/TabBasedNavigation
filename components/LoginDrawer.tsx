@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
-import type { DrawerNavigationProp } from '@react-navigation/drawer';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 
- interface LoginProps {
-     onLogin: () => void; 
-}
+
 interface LoginFormData {
   email: string;
   password: string;
 }
-const Login: React.FC<LoginProps> = ({ onLogin }) => {
+const Login = () => {
     const [formData, setFormData] = useState<LoginFormData>({ email: '', password: '' });
     const [requiredFields, setRequiredFields] = useState('');
     const [success, setSuccess] = useState('');
@@ -34,7 +31,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                 setSuccess('Login Successfully !');
                 setError('');
                 setFormData({ email: '', password: '' });
-                onLogin();
+                //onLogin();
             }
             else {
                 setError('Invalid Credentials ');

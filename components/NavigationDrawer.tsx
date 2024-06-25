@@ -90,14 +90,14 @@
 
 import React, { useRef } from 'react';
 import { View, Text, StyleSheet, DrawerLayoutAndroid, TouchableOpacity } from 'react-native';
-import { NavigationContainer} from '@react-navigation/native';
+import { NavigationContainer, ParamListBase } from '@react-navigation/native';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
-import Login from './Login';
+import Login from './LoginDrawer';
 import Registration from './Registration';
-import Calculator from './Calculator';
+import Calculator from './CalculatorDrawer';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 
-// Define the type for Drawer Navigation Prop
+
 type RootDrawerParamList = {
   Login: undefined;
   Registration: undefined;
@@ -114,6 +114,7 @@ const CustomDrawerContent: React.FC<CustomDrawerContentProps> = ({ navigation })
   const navigateToScreen = (screenName: keyof RootDrawerParamList) => {
     navigation.navigate(screenName);
   };
+
 
   return (
     <DrawerContentScrollView style={styles.drawerContent}>

@@ -3,11 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet,ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-
-interface CalculatorProps {
-  onLogout: () => void;
-}
-const Calculator: React.FC<CalculatorProps> = ({ onLogout}) => {
+const Calculator= () => {
   const [input, setInput] = useState<string>('');
   const [result, setResult] = useState<string>('');
    const scrollViewRef = useRef<ScrollView>(null);
@@ -54,7 +50,7 @@ const Calculator: React.FC<CalculatorProps> = ({ onLogout}) => {
   return (
     <View style={styles.container}>
       <View style={styles.logoutContainer}>
-        <TouchableOpacity onPress={onLogout} style={styles.logoutButton}>
+        <TouchableOpacity  style={styles.logoutButton}>
           <Text style={styles.logoutText}>Logout</Text>
           <Icon name="log-out-outline" size={30} color="tomato" />
         </TouchableOpacity>
