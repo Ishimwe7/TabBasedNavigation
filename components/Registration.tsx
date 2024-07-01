@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Platform } from 'react-native';
 import axios from 'axios';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { format } from 'date-fns';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 interface RegisterFormData {
   names: string;
@@ -15,6 +18,20 @@ export default function Registration() {
     const [success, setSuccess] = useState('');
     const [error, setError] = useState('');
     const [invalidEmail, setInvalidEmail] = useState('');
+    const [date, setDate] = useState(new Date());
+    const [show, setShow] = useState(false);
+    const [text, setText] = useState('Choose Date');
+
+  const onChange = (event:React.ChangeEvent, selectedDate:Date) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === 'ios');
+    setDate(currentDate);
+    setText(format(currentDate, 'yyyy-MM-dd')); 
+  };
+
+  const showDatepicker = () => {
+    setShow(true);
+  };
 
     const validateEmail = (email: string) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -96,7 +113,24 @@ export default function Registration() {
                 keyboardType="email-address"
                 autoCapitalize="none"
             />
-            <TextInput
+            <View style={styles.birthdate}>
+                <Text>Birth-Date: </Text>
+                <Text>{text} </Text>
+                <TouchableOpacity onPress={showDatepicker} style={{ marginBottom: 20 }}>
+                    <Icon name="calendar" size={20} color="black" style={styles.icon} />
+                </TouchableOpacity>
+            </View>
+
+      {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode="date"
+          display="default"
+          onChange={()=>onChange}
+        />
+            )}
+             <TextInput
                 style={styles.input}
                 placeholder="Password"
                 value={formData.password}
@@ -125,6 +159,20 @@ export default function Registration() {
 }
 
 const styles = StyleSheet.create({
+    birthdate: {
+        width:'100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems:'center',
+        borderStyle: 'solid',
+        borderWidth: 1,
+        borderRadius: 30,
+        height: 50,
+        borderColor: '#ccc',
+        paddingHorizontal: 20,
+        marginBottom: 10,
+    },
     container: {
         flex: 1,
         justifyContent: 'center',
@@ -137,6 +185,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 20,
     },
+     icon: {
+     marginLeft: 10,
+  },
     input: {
         width: '100%',
         height: 50,

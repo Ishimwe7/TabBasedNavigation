@@ -23,16 +23,10 @@ In the output, you'll find options to open the app in a
 - [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
 - [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
-## Mobile Calculator App
+## Mobile Tab based navigation
 
-Welcome to my project! Here is the output on phone screen without any calculation
+![Tab Based Navigation](./assets//images/tabBasedMenu.jpg)
 
-![Output of running my calculator app](./assets//images/calculatorLandingScreen.jpg)
+### Navigation Drawer
 
-### Output on phone screen after a simple calculation
-
-![Output of simple calculation](./assets/images/screenOnSimpleNumbers.jpg)
-
-### Output on phone screen after a calculation with more digits
-
-![Output of simple calculation](./assets/images/screenOnMoreDigits.jpg)
+![Navigation Drawer](./assets/images/drawer.jpg)
