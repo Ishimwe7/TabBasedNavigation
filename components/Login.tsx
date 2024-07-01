@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import type { DrawerNavigationProp } from '@react-navigation/drawer';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import axios from 'axios';
 
