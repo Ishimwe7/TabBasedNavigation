@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Switch } from 'react-native';
+import { View, Text, StyleSheet, Switch, Image } from 'react-native';
 import {
   DrawerContentScrollView,
   DrawerItem,
@@ -14,6 +14,13 @@ const CustomDrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
 
   return (
     <DrawerContentScrollView style={styles[theme].container} {...props}>
+      <View style={styles[theme].drawerHeader}>
+        <Image
+          source={require('../assets/images/new-profile.jpg')} 
+          style={styles[theme].profileImage}
+        />
+        <Text style={styles[theme].nameText}>Eng.Nyanja</Text>
+      </View>
       <DrawerItem
         label="Sign Up"
         icon={({ color, size }) => (

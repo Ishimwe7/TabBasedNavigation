@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet,ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-
+import { useTheme } from './ThemeContext';
 
 interface CalculatorProps {
   onLogout: () => void;
@@ -10,7 +10,8 @@ interface CalculatorProps {
 const Calculator: React.FC<CalculatorProps> = ({ onLogout}) => {
   const [input, setInput] = useState<string>('');
   const [result, setResult] = useState<string>('');
-   const scrollViewRef = useRef<ScrollView>(null);
+  const scrollViewRef = useRef<ScrollView>(null);
+  const { theme } = useTheme();
 
   const handlePress = (value: string) => {
     setInput(input + value);
@@ -52,50 +53,50 @@ const Calculator: React.FC<CalculatorProps> = ({ onLogout}) => {
   }, [input]);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.logoutContainer}>
-        <TouchableOpacity onPress={onLogout} style={styles.logoutButton}>
-          <Text style={styles.logoutText}>Logout</Text>
+    <View style={styles[theme].container}>
+      <View style={styles[theme].logoutContainer}>
+        <TouchableOpacity onPress={onLogout} style={styles[theme].logoutButton}>
+          <Text style={styles[theme].logoutText}>Logout</Text>
           <Icon name="log-out-outline" size={30} color="tomato" />
         </TouchableOpacity>
       </View>
-      <View style={styles.calculator}>
-        {result ? <Text style={styles.resultText}>{result}</Text> : <Text>Results Will be displayed here !</Text>}
+      <View style={styles[theme].calculator}>
+        {result ? <Text style={styles[theme].resultText}>{result}</Text> : <Text>Results Will be displayed here !</Text>}
 
        <ScrollView 
-        style={styles.inputContainer}
+        style={styles[theme].inputContainer}
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{ alignItems: 'center' }}
         ref={scrollViewRef}
       >
-        <Text style={styles.inputText}>{input}</Text>
+        <Text style={styles[theme].inputText}>{input}</Text>
       </ScrollView>
-      <View style={styles.row}>
+      <View style={styles[theme].row}>
         <CalculatorButton label="1" onPress={() => handlePress('1')} />
         <CalculatorButton label="2" onPress={() => handlePress('2')} />
         <CalculatorButton label="3" onPress={() => handlePress('3')} />
         <CalculatorButton label="+" onPress={() => handlePress('+')} />
       </View>
-      <View style={styles.row}>
+      <View style={styles[theme].row}>
         <CalculatorButton label="4" onPress={() => handlePress('4')} />
         <CalculatorButton label="5" onPress={() => handlePress('5')} />
         <CalculatorButton label="6" onPress={() => handlePress('6')} />
         <CalculatorButton label="-" onPress={() => handlePress('-')} />
       </View>
-      <View style={styles.row}>
+      <View style={styles[theme].row}>
         <CalculatorButton label="7" onPress={() => handlePress('7')} />
         <CalculatorButton label="8" onPress={() => handlePress('8')} />
         <CalculatorButton label="9" onPress={() => handlePress('9')} />
         <CalculatorButton label="*" onPress={() => handlePress('*')} />
       </View>
-      <View style={styles.row}>
+      <View style={styles[theme].row}>
         <CalculatorButton label="0" onPress={() => handlePress('0')} />
         <CalculatorButton label="C" onPress={handleClear} />
         <CalculatorButton label="⌫" onPress={handleBackspace} />
         <CalculatorButton label="/" onPress={() => handlePress('/')} />
       </View>
-      <View style={styles.row}>
+      <View style={styles[theme].row}>
         <CalculatorButton label="(" onPress={() => handlePress('(')} />
         <CalculatorButton label=")" onPress={() => handlePress(')')} />
         <CalculatorButton label="." onPress={() => handlePress('.')} />
@@ -112,82 +113,165 @@ interface CalculatorButtonProps {
 }
 
 const CalculatorButton: React.FC<CalculatorButtonProps> = ({ label, onPress }) => {
+  const { theme } = useTheme();
    const isDigit = /[0-9]/.test(label);
   return (
-    <TouchableOpacity style={styles.button} onPress={onPress}>
-      <Text style={[styles.buttonText, isDigit ? styles.digitText : styles.signText]}>{label}</Text>
+    <TouchableOpacity style={styles[theme].button} onPress={onPress}>
+      <Text style={[styles[theme].buttonText, isDigit ? styles[theme].digitText : styles[theme].signText]}>{label}</Text>
     </TouchableOpacity>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f5f5f5',
-    marginTop:50
-  },
-  calculator: {
-    marginTop: 40,
-    alignItems: 'center',
-  },
-  logoutContainer: {
-    position: 'absolute',
-    top: 0,
-    right: 20,
-  },
-  logoutButton: {
-    display: 'flex',
-    flexDirection: 'row',
-    gap:10,
-    padding: 10,
-    paddingHorizontal:0
-  },
-   logoutText: {
-    color: 'tomato',
-    fontSize: 20,
-  },
-  row: {
-    flexDirection: 'row',
-    marginBottom: 10,
-  },
-  button: {
-    width: 60,
-    height: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 15,
-    marginTop: 0,
-    marginBottom:0,
-    borderRadius: 5,
-  },
-   digitText: {
-    color: 'black',
-  },
-  signText: {
-    color: 'green',
-  },
-  buttonText: {
-    fontSize: 30,
-  },
-   inputContainer: {
-    maxHeight: 60,
-    marginBottom: 20,
-    paddingHorizontal: 10,
-  },
-  inputText: {
-    fontSize: 30,
-    color: 'black',
-    marginBottom: 20,
-    textAlign:'center',
-    paddingRight: 15
-  },
-  resultText: {
-    fontSize: 40,
-    color: 'green',
-    marginBottom: 10,
-  },
-});
-
+const styles = {
+  light: StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#f5f5f5',
+      marginTop: 50,
+    },
+    calculator: {
+      marginTop: 40,
+      alignItems: 'center',
+    },
+    logoutContainer: {
+      position: 'absolute',
+      top: 0,
+      right: 20,
+    },
+    logoutButton: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      padding: 10,
+    },
+    logoutText: {
+      color: 'tomato',
+      fontSize: 20,
+      marginRight: 5,
+    },
+    row: {
+      flexDirection: 'row',
+      marginBottom: 10,
+    },
+    button: {
+      width: 60,
+      height: 60,
+      justifyContent: 'center',
+      alignItems: 'center',
+      margin: 15,
+      marginTop: 0,
+      marginBottom: 0,
+      borderRadius: 5,
+      backgroundColor: '#fff',
+    },
+    digitText: {
+      color: 'black',
+      fontSize: 30,
+    },
+    signText: {
+      color: 'green',
+      fontSize: 30,
+    },
+    buttonText: {
+      fontSize: 30,
+    },
+    inputContainer: {
+      maxHeight: 60,
+      marginBottom: 20,
+      paddingHorizontal: 10,
+    },
+    inputText: {
+      fontSize: 30,
+      color: 'black',
+      marginBottom: 20,
+      textAlign: 'center',
+      paddingRight: 15,
+    },
+    resultText: {
+      fontSize: 40,
+      color: 'green',
+      marginBottom: 10,
+    },
+    placeholderText: {
+      fontSize: 20,
+      color: '#999',
+    },
+  }),
+  dark: StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#333',
+      marginTop: 50,
+    },
+    calculator: {
+      marginTop: 40,
+      alignItems: 'center',
+    },
+    logoutContainer: {
+      position: 'absolute',
+      top: 0,
+      right: 20,
+    },
+    logoutButton: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      padding: 10,
+    },
+    logoutText: {
+      color: 'tomato',
+      fontSize: 20,
+      marginRight: 5,
+    },
+    row: {
+      flexDirection: 'row',
+      marginBottom: 10,
+    },
+    button: {
+      width: 60,
+      height: 60,
+      justifyContent: 'center',
+      alignItems: 'center',
+      margin: 15,
+      marginTop: 0,
+      marginBottom: 0,
+      borderRadius: 5,
+      backgroundColor: '#555',
+    },
+    digitText: {
+      color: '#fff',
+      fontSize: 30,
+    },
+    signText: {
+      color: '#5fa',
+      fontSize: 30,
+    },
+    buttonText: {
+      fontSize: 30,
+    },
+    inputContainer: {
+      maxHeight: 60,
+      marginBottom: 20,
+      paddingHorizontal: 10,
+    },
+    inputText: {
+      fontSize: 30,
+      color: '#fff',
+      marginBottom: 20,
+      textAlign: 'center',
+      paddingRight: 15,
+    },
+    resultText: {
+      fontSize: 40,
+      color: '#5fa',
+      marginBottom: 10,
+    },
+    placeholderText: {
+      fontSize: 20,
+      color: '#aaa',
+    },
+  }),
+};
 export default Calculator;
